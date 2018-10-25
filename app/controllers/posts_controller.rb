@@ -46,6 +46,7 @@ class PostsController < ApplicationController
    admin_username = Rails.application.secrets.admin_username
    admin_password = Rails.application.secrets.admin_password
    username == admin_username && password == admin_password 
+   session[:admin] = true if (username == admin_username && password == admin_password)
   end
  end
    def admin 

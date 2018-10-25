@@ -1,5 +1,15 @@
 <h1><%= @post.title %></h1>
 <%= image_tag @post.image_url.to_s, alt: "Image", class: "img-responsive" %>
 <p><%= @post.content %></p>
-<%= link_to "EDIT" , edit_post_path(@path) %>
-<%= link_to "Delete" , @post , method: :delete , data: {confirm: "are u sure? "} %>
+<%#= link_to "EDIT" , edit_post_path(@path) %>
+<%#= link_to "Delete" , @post , method: :delete , data: {confirm: "are u sure? "} %>
+<% if session[:admin] then %>
+ <%= link_to edit_post_path(@post), class: "btn btn-default" do %>
+   <span class="glyphicon glyphicon-align-left" aria-hidden="true">
+   </span> Edit
+ <% end %>
+ <%= link_to @post, method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-default" do %>
+   <span class="glyphicon glyphicon-trash" aria-hidden="true">
+   </span> Delete
+ <% end %> 
+<% end %>
