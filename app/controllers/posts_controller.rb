@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
 	before_action :find_posts , only: [:show,:edit,:update,:destroy]
+
 	def index
-		@post=Post.all
+		@posts=Post.all
 		if params[:category].blank? 
 			@post=Post.all.order("created at DESC")
 		else 
@@ -9,11 +10,14 @@ class PostsController < ApplicationController
 			@post = Post.where(category_id: @category_id).order("created at DESC")
 		end
 	end
+
 	def show
 	end
+
 	def new
 		@post=Post.new
 	end 
+
 	def create
 		@post=Post.new(post_params)
 		if @post.save
@@ -23,16 +27,21 @@ class PostsController < ApplicationController
 			render 'new'
 		end
 	end
+
 	def update
 		if @post.update(post_params)
 			redirect_to @post , notice:"the past was successfully updated!"
 		else 
 			render 'edit'
+		end
 	end
+
 	def destroy
 		if @post.destroy
 			redirect_to root_path , notice: "successfully destroyed!"
+		end
 	end 
+
 	private
 	def post_params
 		params.require(:post).permit(:title, :content , :category_id)
@@ -41,3 +50,4 @@ class PostsController < ApplicationController
 		@post = Post.find(params[:id])
 	end 
 end
+
